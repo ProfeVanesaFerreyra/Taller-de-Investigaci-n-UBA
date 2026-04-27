@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investigación II · Taller de Investigación · EUE María Remedios del Valle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Soft pastel pink palette */
+  --rosa:     #D4789A;
+  --rosa-med: #E8A0BC;
+  --rosa-clr: #F4C7D8;
+  --rosa-pal: #FDE8F0;
+  --rosa-xpal:#FEF4F8;
+  --negro:    #1A1A2E;
+  --gris:     #7A6B72;
+  --gris-clr: #FAF5F7;
+  --blanco:   #ffffff;
+  --ok:       #4a9e78;
+  --ok-pal:   #e0f5ec;
+  --mal:      #c0546a;
+  --mal-pal:  #fde8ec;
+  --warn:     #a07030;
+  --warn-pal: #fef4e0;
+  --sombra:   0 4px 24px rgba(212,120,154,0.12);
+  --sombra-lg:0 8px 40px rgba(212,120,154,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--blanco);
+  color: var(--negro);
+  min-height: 100vh;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────────── */
+header {
+  background: linear-gradient(135deg, #EEB8CC 0%, #F7D0DF 100%);
+  color: var(--negro);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--sombra-lg);
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  gap: 16px;
+}
+.header-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.header-brand .inst {
+  font-size: 11px;
+  opacity: .75;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.header-brand .titulo {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.header-docente {
+  font-size: 12px;
+  opacity: .8;
+  text-align: right;
+  line-height: 1.5;
+}
+
+nav {
+  background: rgba(0,0,0,.18);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
+nav button {
+  background: none;
+  border: none;
+  color: var(--gris);
+  padding: 11px 22px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+  letter-spacing: .02em;
+}
+nav button:hover { color: var(--rosa); background: var(--rosa-xpal); }
+nav button.active {
+  color: var(--rosa);
+  border-bottom-color: var(--rosa);
+  background: var(--rosa-xpal);
+  font-weight: 600;
+}
+
+/* ── PÁGINAS ─────────────────────────────────────────────────────── */
+.pagina { display: none; animation: fadeIn .3s ease; }
+.pagina.activa { display: block; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+/* ── HERO ─────────────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, var(--rosa) 0%, var(--rosa-med) 60%, #D4608A 100%);
+  color: var(--blanco);
+  padding: 72px 32px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='rgba(255,255,255,0.08)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.hero h1 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  position: relative;
+  color: var(--negro);
+}
+.hero p {
+  font-size: 17px;
+  color: var(--gris);
+  max-width: 600px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+  position: relative;
+}
+.hero-cards {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.hero-card {
+  background: var(--blanco);
+  backdrop-filter: none;
+  border: 1.5px solid var(--rosa-clr);
+  border-radius: 12px;
+  padding: 18px 24px;
+  min-width: 140px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.hero-card:hover {
+  background: var(--rosa-xpal);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+.hero-card .num { font-size: 28px; font-weight: 700; font-family: 'Libre Baskerville', Georgia, serif; color: var(--rosa); }
+.hero-card .lab { font-size: 12px; color: var(--negro); font-weight: 600; margin-top: 2px; }
+
+/* ── CONTENIDO GENERAL ───────────────────────────────────────────── */
+.contenido { max-width: 900px; margin: 0 auto; padding: 48px 28px 96px; }
+
+/* ── UNIDAD HEADER ───────────────────────────────────────────────── */
+.unidad-header {
+  background: linear-gradient(135deg, var(--rosa-pal) 0%, var(--rosa-xpal) 100%);
+  color: var(--negro);
+  border: 1.5px solid var(--rosa-clr);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 36px;
+}
+.unidad-header .etiq {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--rosa);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.unidad-header h2 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: clamp(22px, 4vw, 34px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.unidad-header .subtitulo {
+  font-size: 14px;
+  color: var(--gris);
+  margin-top: 8px;
+  font-style: italic;
+}
+.producto-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blanco);
+  border: 1.5px solid var(--rosa-clr);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  margin-top: 14px;
+}
+
+/* ── SECCIÓN ────────────────────────────────────────────────────── */
+.seccion { margin-bottom: 40px; }
+.seccion-titulo {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--negro);
+  border-bottom: 3px solid var(--rosa-clr);
+  padding-bottom: 8px;
+  margin-bottom: 18px;
+}
+.sub-titulo {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--rosa);
+  margin: 20px 0 10px;
+}
+p.texto { font-size: 15px; line-height: 1.75; color: #333; margin-bottom: 12px; }
+
+/* ── CAJAS ESPECIALES ────────────────────────────────────────────── */
+.caja {
+  border-radius: 16px;
+  padding: 22px 26px;
+  margin: 20px 0;
+  border-left: 4px solid;
+}
+.caja-concepto { background: var(--rosa-xpal); border-color: var(--rosa); border: 1.5px solid var(--rosa-clr); border-left: 4px solid var(--rosa); }
+.caja-concepto .caja-titulo { color: var(--rosa); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+.caja-atencion { background: var(--warn-pal); border: 1.5px solid #e8d080; border-left: 4px solid var(--warn); }
+.caja-atencion .caja-titulo { color: var(--warn); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+.caja-ejemplo { background: var(--rosa-xpal); border: 1.5px solid var(--rosa-clr); border-left: 4px solid var(--rosa-med); }
+.caja-ejemplo .caja-titulo { color: var(--rosa); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+.caja ul { list-style: none; padding: 0; }
+.caja ul li { padding: 4px 0 4px 18px; position: relative; font-size: 14px; line-height: 1.6; }
+.caja ul li::before { content: '›'; position: absolute; left: 0; color: var(--rosa); font-weight: 700; }
+.caja p { font-size: 14px; line-height: 1.7; }
+
+/* Guía reflexión */
+.reflexion {
+  background: var(--rosa-xpal);
+  border: 1.5px solid var(--rosa-clr);
+  border-radius: 20px;
+  padding: 24px 28px;
+  margin: 32px 0 16px;
+}
+.reflexion h4 { color: var(--rosa); font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.reflexion ol { padding-left: 20px; }
+.reflexion ol li { font-size: 14px; line-height: 1.65; margin-bottom: 6px; color: #333; }
+
+/* Bibliografía */
+.biblio {
+  background: var(--blanco);
+  border: 1.5px solid var(--rosa-clr);
+  border-radius: 20px;
+  margin: 32px 0;
+  overflow: hidden;
+}
+.biblio-header {
+  background: linear-gradient(90deg, var(--rosa-med), var(--rosa-clr));
+  color: var(--blanco);
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.biblio-body { padding: 16px 20px; }
+.biblio-subtitulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--rosa); margin: 12px 0 8px; }
+.biblio-body li { font-size: 13px; line-height: 1.65; color: #444; margin-bottom: 6px; list-style: none; padding-left: 16px; position: relative; font-style: italic; }
+.biblio-body li::before { content: '—'; position: absolute; left: 0; color: var(--rosa-clr); }
+
+/* ── TABLAS ──────────────────────────────────────────────────────── */
+.tabla-wrap { overflow-x: auto; margin: 20px 0; border-radius: 10px; box-shadow: var(--sombra); }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+thead tr { background: var(--rosa-med); color: var(--blanco); }
+thead th { padding: 12px 14px; text-align: left; font-weight: 600; letter-spacing: .02em; }
+tbody tr:nth-child(even) { background: var(--rosa-xpal); }
+tbody tr:nth-child(odd)  { background: var(--blanco); }
+tbody td { padding: 10px 14px; vertical-align: top; line-height: 1.55; border-bottom: 1px solid rgba(139,34,82,.08); }
+tbody tr:hover td { background: var(--rosa-pal); }
+
+/* ── MÓDULO DE PRÁCTICA ──────────────────────────────────────────── */
+.practica-hero {
+  background: linear-gradient(135deg, var(--rosa-pal) 0%, var(--rosa-xpal) 100%);
+  color: var(--negro);
+  border: 1.5px solid var(--rosa-clr);
+  padding: 40px 32px;
+  text-align: center;
+  border-radius: 16px;
+  margin-bottom: 32px;
+}
+.practica-hero h2 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 28px;
+  color: var(--negro);
+  margin-bottom: 8px;
+}
+.practica-hero p { color: var(--gris); font-size: 15px; margin-bottom: 20px; }
+
+.modo-selector {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.modo-btn {
+  background: var(--blanco);
+  border: 2px solid var(--rosa-clr);
+  color: var(--rosa);
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+}
+.modo-btn:hover, .modo-btn.activo {
+  background: var(--rosa);
+  color: var(--blanco);
+  border-color: var(--rosa);
+}
+
+/* Pregunta card */
+.pregunta-card {
+  background: var(--blanco);
+  border: 1.5px solid #f0e0ea;
+  border-radius: 24px;
+  padding: 28px 32px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 24px rgba(201,122,174,0.07);
+  transition: box-shadow .2s;
+}
+.pregunta-card:hover {
+  box-shadow: 0 8px 32px rgba(201,122,174,0.13);
+}
+.pregunta-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.badge-tipo {
+  background: var(--rosa-pal);
+  color: var(--rosa);
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.badge-unidad {
+  background: var(--gris-clr);
+  color: var(--gris);
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+.badge-pts {
+  margin-left: auto;
+  background: var(--rosa);
+  color: var(--blanco);
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pregunta-enunciado {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--negro);
+  margin-bottom: 18px;
+}
+.pregunta-enunciado strong { color: var(--rosa); }
+
+/* Opciones múltiple */
+.opciones { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.opcion {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 2px solid #e8e8e8;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s;
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--blanco);
+  text-align: left;
+  width: 100%;
+}
+.opcion:hover { border-color: var(--rosa-clr); background: var(--rosa-xpal); }
+.opcion.seleccionada { border-color: var(--rosa); background: var(--rosa-pal); }
+.opcion.correcta { border-color: var(--ok); background: var(--ok-pal); color: var(--ok); }
+.opcion.incorrecta { border-color: var(--mal); background: var(--mal-pal); color: var(--mal); }
+.opcion-letra {
+  min-width: 26px; height: 26px;
+  background: #eee;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+.opcion.seleccionada .opcion-letra { background: var(--rosa); color: var(--blanco); }
+.opcion.correcta .opcion-letra { background: var(--ok); color: var(--blanco); }
+.opcion.incorrecta .opcion-letra { background: var(--mal); color: var(--blanco); }
+
+/* VoF */
+.vof-opciones { display: flex; gap: 12px; margin-bottom: 16px; }
+.vof-btn {
+  flex: 1;
+  padding: 14px;
+  border: 2px solid #e8e8e8;
+  border-radius: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  background: var(--blanco);
+}
+.vof-btn:hover { border-color: var(--rosa-clr); }
+.vof-btn.seleccionado { border-color: var(--rosa); background: var(--rosa-pal); color: var(--rosa); }
+.vof-btn.correcto { border-color: var(--ok); background: var(--ok-pal); color: var(--ok); }
+.vof-btn.incorrecto { border-color: var(--mal); background: var(--mal-pal); color: var(--mal); }
+
+/* Relacionar columnas */
+.relacionar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.col-rel h5 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--rosa); margin-bottom: 10px; font-weight: 700; }
+.rel-item {
+  padding: 10px 14px;
+  border: 2px solid #e8e8e8;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 8px;
+  background: var(--blanco);
+  cursor: pointer;
+  transition: all .2s;
+}
+.rel-item.seleccionado { border-color: var(--rosa); background: var(--rosa-pal); }
+.rel-item.emparejado-ok { border-color: var(--ok); background: var(--ok-pal); }
+.rel-item.emparejado-mal { border-color: var(--mal); background: var(--mal-pal); }
+select.rel-select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 2px solid #e8e8e8;
+  border-radius: 8px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  background: var(--blanco);
+  cursor: pointer;
+  margin-bottom: 8px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B2252' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+}
+select.rel-select.correcto { border-color: var(--ok); background-color: var(--ok-pal); }
+select.rel-select.incorrecto { border-color: var(--mal); background-color: var(--mal-pal); }
+
+/* Texto abierto */
+textarea.resp-abierta {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 16px;
+  border: 2px solid #e8e8e8;
+  border-radius: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  resize: vertical;
+  transition: border-color .2s;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+textarea.resp-abierta:focus { outline: none; border-color: var(--rosa); }
+
+/* Retroalimentación */
+.feedback {
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 12px;
+  display: none;
+}
+.feedback.visible { display: block; }
+.feedback.ok { background: var(--ok-pal); color: var(--ok); border-left: 4px solid var(--ok); }
+.feedback.mal { background: var(--mal-pal); color: var(--mal); border-left: 4px solid var(--mal); }
+.feedback.modelo { background: var(--rosa-pal); color: var(--rosa); border-left: 4px solid var(--rosa); }
+.feedback strong { display: block; margin-bottom: 4px; }
+
+/* Botones de acción */
+.btn-verificar {
+  background: var(--rosa);
+  color: var(--blanco);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  margin-right: 10px;
+}
+.btn-verificar:hover { background: #6B1A42; transform: translateY(-1px); }
+.btn-verificar:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.btn-reset {
+  background: none;
+  border: 2px solid var(--rosa-clr);
+  color: var(--rosa);
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-reset:hover { background: var(--rosa-pal); }
+
+.resultado-final .btn-reset { color: var(--rosa); border-color: var(--rosa-clr); }
+
+/* Contador de progreso */
+.progreso-bar-wrap {
+  background: var(--blanco);
+  border: 1.5px solid var(--rosa-clr);
+  border-radius: 20px;
+  padding: 16px 24px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(201,122,174,0.07);
+}
+.progreso-texto { font-size: 14px; color: var(--rosa); font-weight: 600; white-space: nowrap; }
+.barra-bg { flex: 1; height: 8px; background: var(--rosa-clr); border-radius: 4px; overflow: hidden; }
+.barra-fill { height: 100%; background: var(--rosa); border-radius: 4px; transition: width .4s ease; }
+.puntaje-total { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 500; color: var(--rosa); white-space: nowrap; }
+
+/* Resultado final */
+.resultado-final {
+  background: linear-gradient(135deg, var(--rosa-pal) 0%, var(--rosa-xpal) 100%);
+  color: var(--negro);
+  border: 2px solid var(--rosa-clr);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+  margin: 32px 0;
+  display: none;
+}
+.resultado-final.visible { display: block; }
+.resultado-final .nota-grande {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 80px;
+  font-weight: 900;
+  color: var(--rosa);
+  line-height: 1;
+  margin: 16px 0;
+}
+.resultado-final p { color: var(--gris); font-size: 16px; margin-bottom: 8px; }
+.resultado-final .comentario { font-size: 20px; font-weight: 600; color: var(--negro); margin-bottom: 24px; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .header-top { padding: 12px 16px; }
+  .contenido { padding: 24px 16px 60px; }
+  .relacionar-grid { grid-template-columns: 1fr; }
+  .hero { padding: 48px 16px 40px; }
+  .unidad-header { padding: 20px 20px; }
+}
+
+/* Spinner de carga inicial */
+.spinner-wrap {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 200px;
+}
+.spinner {
+  width: 36px; height: 36px;
+  border: 4px solid var(--rosa-clr);
+  border-top-color: var(--rosa);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Tabs dentro de unidad */
+.tabs-unidad { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.tab-btn {
+  padding: 8px 18px;
+  border-radius: 50px;
+  border: 2px solid var(--rosa-clr);
+  background: var(--blanco);
+  color: var(--rosa);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab-btn:hover, .tab-btn.activo {
+  background: var(--rosa);
+  color: var(--blanco);
+  border-color: var(--rosa);
+}
+.tab-contenido { display: none; }
+.tab-contenido.activo { display: block; }
+
+/* Texto italic para ejemplos en tabla */
+.ej { color: #555; font-style: italic; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-top">
+    <div class="header-brand">
+      <span class="inst">EUE "María Remedios del Valle" · UBA</span>
+      <span class="titulo">Investigación II · Taller de Investigación</span>
+    </div>
+    <div class="header-docente">
+      Mgtr. Vanesa Yanina Ferreyra
+    </div>
+  </div>
+  <nav id="nav-principal">
+    <button class="active" onclick="mostrarPag('inicio', this)">🏠 Inicio</button>
+    <button onclick="mostrarPag('u1', this)">Unidad 1</button>
+    <button onclick="mostrarPag('u2', this)">Unidad 2</button>
+    <button onclick="mostrarPag('u3', this)">Unidad 3</button>
+    <button onclick="mostrarPag('u4', this)">Unidad 4</button>
+    <button onclick="mostrarPag('practica', this)">✏️ Práctica</button>
+  </nav>
+</header>
+
+<!-- ══════════════════════ INICIO ══════════════════════ -->
+<div id="pag-inicio" class="pagina activa">
+  <div class="hero">
+    <div class="hero-eyebrow">🌸 Taller de Investigación en Enfermería</div>
+    <h1>Resumen de<br><em>Investigación II</em></h1>
+    <p>Material de estudio y práctica. Explorá cada unidad y poné a prueba tus conocimientos.</p>
+    <div class="hero-cards">
+      <div class="hero-card" onclick="mostrarPag('u1', document.querySelectorAll('nav button')[1])">
+        <div class="num">U1</div>
+        <div class="lab">Objeto de Estudio</div>
+      </div>
+      <div class="hero-card" onclick="mostrarPag('u2', document.querySelectorAll('nav button')[2])">
+        <div class="num">U2</div>
+        <div class="lab">Variables</div>
+      </div>
+      <div class="hero-card" onclick="mostrarPag('u3', document.querySelectorAll('nav button')[3])">
+        <div class="num">U3</div>
+        <div class="lab">Diseño Metodológico</div>
+      </div>
+      <div class="hero-card" onclick="mostrarPag('u4', document.querySelectorAll('nav button')[4])">
+        <div class="num">U4</div>
+        <div class="lab">Instrumentos</div>
+      </div>
+      <div class="hero-card" onclick="mostrarPag('practica', document.querySelectorAll('nav button')[5])">
+        <div class="num">✏️</div>
+        <div class="lab">Práctica</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">¿Cómo usar esta plataforma?</div>
+      <p class="texto">Esta plataforma acompaña el proceso de construcción de tu proyecto de investigación a lo largo del cuatrimestre. En cada unidad encontrás los conceptos clave con ejemplos aplicados al campo de la enfermería.</p>
+      <p class="texto">En el módulo de <strong>Práctica</strong> podés ejercitar con los mismos tipos de preguntas que se usan en las evaluaciones: relacionar conceptos, verdadero/falso con justificación, análisis de casos y más.</p>
+    </div>
+
+    <div class="caja caja-concepto">
+      <div class="caja-titulo">📌 Regla de oro de la redacción académica</div>
+      <ul>
+        <li><strong>Tiempo futuro:</strong> "se realizará", "se medirá", "se analizarán"</li>
+        <li><strong>Voz pasiva con 'se':</strong> "se procederá a...", "se seleccionará..."</li>
+        <li><strong>Sin primera persona:</strong> nunca "yo hice" ni "nosotros mediremos"</li>
+        <li><strong>Siempre citar en APA 7°</strong> toda afirmación que no sea elaboración propia</li>
+      </ul>
+    </div>
+
+    <div class="caja caja-atencion" style="margin-top:16px;">
+      <div class="caja-titulo">📅 Producto de cada unidad</div>
+      <ul>
+        <li><strong>U1:</strong> Revisión y ajuste del anteproyecto (problema, pregunta y objetivos)</li>
+        <li><strong>U2:</strong> Matriz de operacionalización de variables</li>
+        <li><strong>U3:</strong> Diseño metodológico del proyecto (Capítulo III)</li>
+        <li><strong>U4:</strong> Instrumento de recolección de datos + prueba piloto</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ UNIDAD 1 ══════════════════════ -->
+<div id="pag-u1" class="pagina">
+<div class="contenido">
+  <div class="unidad-header">
+    <div class="etiq">Unidad 1</div>
+    <h2>Construcción del Objeto de Investigación</h2>
+    <div class="subtitulo">Pregunta · Objetivos · Hipótesis · Marco Teórico</div>
+    <div class="producto-badge">🎯 Producto: Revisión y ajuste del anteproyecto</div>
+  </div>
+
+  <div class="tabs-unidad">
+    <button class="tab-btn activo" onclick="activarTab('u1','pregunta',this)">Pregunta de inv.</button>
+    <button class="tab-btn" onclick="activarTab('u1','objetivos',this)">Objetivos</button>
+    <button class="tab-btn" onclick="activarTab('u1','hipotesis',this)">Hipótesis</button>
+    <button class="tab-btn" onclick="activarTab('u1','marco',this)">Marco Teórico</button>
+    <button class="tab-btn" onclick="activarTab('u1','redaccion',this)">Redacción académica</button>
+  </div>
+
+  <!-- TAB: Pregunta -->
+  <div id="u1-tab-pregunta" class="tab-contenido activo">
+    <div class="seccion">
+      <div class="seccion-titulo">La pregunta de investigación</div>
+      <p class="texto">Una pregunta de investigación no es una duda: es una <strong>intervención deliberada sobre la realidad</strong>. Al formularla, decidimos qué vamos a mirar, desde dónde y en qué circunstancias.</p>
+      <div class="caja caja-concepto">
+        <div class="caja-titulo">📌 Componentes obligatorios de toda pregunta</div>
+        <ul>
+          <li>Variable/s o fenómeno de interés (¿qué se estudiará?)</li>
+          <li>Población (¿quiénes son los sujetos?)</li>
+          <li>Espacio geográfico o contexto institucional (¿dónde?)</li>
+          <li>Tiempo o período (¿cuándo?)</li>
+          <li>Tipo de relación entre variables (cuando corresponda)</li>
+        </ul>
+      </div>
+
+      <div class="sub-titulo">5 ejemplos completos</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Pregunta</th><th>Variables</th><th>Población</th><th>Espacio / Tiempo</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>¿Cuál es la relación entre el nivel de estrés laboral y la adherencia al protocolo de seguridad del paciente en enfermeros de la UTI de un hospital público de CABA durante 2025?</td><td>VI: Estrés laboral<br>VD: Adherencia al protocolo</td><td>Enfermeros/as de UTI</td><td>Hospital público CABA / 2025</td></tr>
+            <tr><td>2</td><td>¿De qué manera influirá la implementación de un protocolo de higiene de manos en la incidencia de infecciones intrahospitalarias en una UCI durante el segundo semestre de 2026?</td><td>VI: Protocolo higiene<br>VD: Incidencia de infecciones</td><td>Personal y pacientes de UCI</td><td>UCI / 2do sem. 2026</td></tr>
+            <tr><td>3</td><td>¿Cuáles son las percepciones de los familiares sobre la calidad del cuidado humanizado en pediatría del Hospital X durante el invierno de 2026?</td><td>Fenómeno: cuidado humanizado</td><td>Familiares de pacientes pediátricos</td><td>Hospital X / invierno 2026</td></tr>
+            <tr><td>4</td><td>¿Qué relación existe entre la rotación de turnos nocturnos y la frecuencia de errores en la administración de medicación en enfermeros de guardia durante 2026?</td><td>VI: Rotación nocturna<br>VD: Errores en medicación</td><td>Enfermeros/as de guardia de adultos</td><td>Hospital de agudos / 2026</td></tr>
+            <tr><td>5</td><td>¿Cuál es la prevalencia de burnout y su asociación con la intención de abandono laboral en enfermeros de APS de la zona norte del AMBA en 2026?</td><td>V1: Burnout<br>V2: Intención de abandono</td><td>Enfermeros/as de APS zona norte</td><td>Centros de salud / 2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="caja caja-atencion">
+        <div class="caja-titulo">⚠️ Supuestos y prejuicios</div>
+        <p>Al formular la pregunta, el investigador ya tiene creencias sobre la respuesta. Reconocerlos y explicitarlos es parte del rigor científico: no se trata de eliminarlos, sino de hacerlos conscientes para que no distorsionen el proceso.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Objetivos -->
+  <div id="u1-tab-objetivos" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Objetivos de investigación</div>
+      <p class="texto">Los objetivos indican <strong>qué se pretende lograr</strong> con el estudio. Deben comenzar con un verbo en infinitivo, ser alcanzables y guardar coherencia lógica entre sí.</p>
+
+      <div class="caja caja-concepto">
+        <div class="caja-titulo">📌 Jerarquía de verbos según complejidad</div>
+        <ul>
+          <li><strong>Nivel descriptivo:</strong> Identificar — Describir — Caracterizar — Relevar — Cuantificar</li>
+          <li><strong>Nivel analítico:</strong> Comparar — Relacionar — Determinar — Establecer — Asociar</li>
+          <li><strong>Nivel evaluativo:</strong> Analizar — Evaluar — Comprender — Explicar — Interpretar</li>
+          <li><strong>❌ Evitar:</strong> Capacitar, Ayudar, Mejorar, Concientizar → son acciones, no de investigación</li>
+        </ul>
+      </div>
+
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>Ejemplo de objetivo</th><th>¿Por qué es adecuado?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>General</strong></td><td>Analizar la relación entre el nivel de conocimientos sobre prevención de UPP y las prácticas observadas en enfermeros de sala general del Hospital X durante 2026.</td><td>Verbo analítico, contiene ambas variables, población, contexto y tiempo. Es medible.</td></tr>
+            <tr><td>Específico 1</td><td>Identificar el nivel de conocimientos teóricos sobre prevención de UPP mediante un test de opción múltiple.</td><td>Verbo descriptivo. Paso necesario y previo al análisis de la relación.</td></tr>
+            <tr><td>Específico 2</td><td>Observar la frecuencia de realización de cambios posturales y uso de superficies de apoyo.</td><td>Complementa con datos de práctica real, no solo conocimiento teórico.</td></tr>
+            <tr><td><strong>General</strong></td><td>Evaluar la eficacia de un taller de RCP en el nivel de conocimientos técnicos del personal auxiliar de una clínica privada de CABA.</td><td>El verbo 'evaluar' es coherente con un diseño pre-post.</td></tr>
+            <tr><td>Específico</td><td>Comparar los resultados del pre-test y post-test para establecer si el taller produjo cambios significativos.</td><td>Responde directamente al objetivo general. Verbo adecuado al diseño cuasi-experimental.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Hipótesis -->
+  <div id="u1-tab-hipotesis" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Sistema de hipótesis</div>
+      <p class="texto">Las hipótesis son <strong>explicaciones tentativas del fenómeno investigado</strong>, formuladas como proposiciones que pueden ser puestas a prueba. Se redactan en tiempo futuro y se usan principalmente en estudios cuantitativos.</p>
+
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>Ejemplo completo en enfermería</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Correlacional</strong></td><td>A mayor nivel de sobrecarga del cuidador principal, menor será la calidad del cuidado domiciliario brindado al paciente post-ACV.</td></tr>
+            <tr><td><strong>Descriptiva</strong></td><td>La prevalencia de burnout en enfermeros de guardia del turno noche superará el 40% durante el invierno de 2026.</td></tr>
+            <tr><td><strong>Diferencia de grupos</strong></td><td>El personal del turno noche presentará niveles de estrés significativamente más altos que el del turno mañana.</td></tr>
+            <tr><td><strong>Causal</strong></td><td>La implementación de un taller de RCP incrementará en al menos un 30% el nivel de conocimientos técnicos del personal auxiliar.</td></tr>
+            <tr><td><strong>Nula (H₀)</strong></td><td>No existirá relación estadísticamente significativa entre los años de antigüedad y la adherencia a las normas de bioseguridad.</td></tr>
+            <tr><td><strong>Alternativa (Hₐ)</strong></td><td>El apósito de hidrogel logrará una mayor reducción del área de las UPP grado II en comparación con la técnica convencional.</td></tr>
+            <tr><td><strong>Asociativa</strong></td><td>El clima organizacional se encontrará positivamente asociado con la satisfacción laboral de los licenciados en enfermería.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Marco Teórico -->
+  <div id="u1-tab-marco" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Marco teórico</div>
+      <p class="texto">El marco teórico no es un glosario ni una colección de definiciones. Es el <strong>conjunto organizado de teorías, conceptos y antecedentes</strong> que contextualiza y fundamenta el problema de investigación.</p>
+
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Componente</th><th>Qué incluye</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Antecedentes</strong></td><td>Investigaciones previas (últimos 5-10 años). Mostrar qué se hizo y qué falta.</td><td>"Rodríguez et al. (2022) encontraron una prevalencia de burnout del 38% en UCIs de España. En Argentina, los estudios disponibles son escasos..."</td></tr>
+            <tr><td><strong>Marco conceptual</strong></td><td>Definición de los conceptos centrales con base en autores. Teorías de enfermería si aplican.</td><td>"La sobrecarga del cuidador es definida por Zarit (1980) como el grado en que el cuidador percibe que su salud, vida social y bienestar económico se ven afectados..."</td></tr>
+            <tr><td><strong>Marco normativo</strong></td><td>Leyes, resoluciones, declaraciones internacionales relevantes.</td><td>Ley 26.529 de Derechos del Paciente. Ley 24.004 de Ejercicio de la Enfermería. Declaración de Helsinki.</td></tr>
+            <tr><td><strong>Marco institucional</strong></td><td>Caracterización del contexto donde se realiza el estudio.</td><td>Descripción del servicio, tipo de institución, características de la población.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Redacción académica -->
+  <div id="u1-tab-redaccion" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Redacción académica</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th>❌ Incorrecto</th><th>✅ Correcto</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tiempo verbal</strong></td><td><em>"Realicé entrevistas a los participantes."</em></td><td>"Se realizarán entrevistas semiestructuradas a los participantes."</td></tr>
+            <tr><td><strong>Persona gramatical</strong></td><td><em>"Nosotros seleccionamos..."</em></td><td>"Se seleccionará una muestra de..."</td></tr>
+            <tr><td><strong>Imprecisión</strong></td><td><em>"La muestra será grande."</em></td><td>"La muestra estará compuesta por 80 participantes."</td></tr>
+            <tr><td><strong>Cita</strong></td><td><em>"Según estudios, el burnout afecta al personal."</em></td><td>"Según Maslach y Jackson (1981), el burnout se caracteriza por tres dimensiones..."</td></tr>
+            <tr><td><strong>Verbo objetivo</strong></td><td><em>"El objetivo es capacitar al personal..."</em></td><td>"El objetivo es describir el nivel de conocimientos del personal..."</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="reflexion">
+    <h4>✅ Guía de reflexión — Unidad 1</h4>
+    <ol>
+      <li>¿Mi pregunta contiene las variables, población, espacio y tiempo de manera explícita?</li>
+      <li>¿Mis objetivos específicos son pasos necesarios y suficientes para cumplir el general?</li>
+      <li>¿Los verbos de mis objetivos son de investigación y no de intervención?</li>
+      <li>¿Explicitué mis supuestos y prejuicios sobre el tema?</li>
+      <li>¿Mi justificación incluye datos concretos que demuestran la relevancia del problema?</li>
+      <li>¿El marco teórico define los conceptos con base en autores y no solo con mis propias palabras?</li>
+    </ol>
+  </div>
+
+  <div class="biblio">
+    <div class="biblio-header">📚 Bibliografía — Unidad 1</div>
+    <div class="biblio-body">
+      <div class="biblio-subtitulo">Obligatoria</div>
+      <ul>
+        <li>Arias, F. G. (2012). <em>El proyecto de investigación</em> (6ª ed.). Episteme. (Cap. 3-4-8-9-10)</li>
+        <li>Hernández Sampieri, R. et al. (2014). <em>Metodología de la investigación</em> (6ª ed.). McGraw-Hill. (Cap. 2-3-4-6)</li>
+        <li>Guevara Valtier, M. C. et al. (2017). <em>Protocolos de investigación en enfermería</em>. El Manual Moderno. (Cap. 3-6)</li>
+        <li>Yuni, J. A. & Urbano, C. A. (2006). Formulación de hipótesis. <em>Técnicas para investigar</em> (2ª ed.). Brujas. (pp. 103-116)</li>
+        <li>Bassi Follari, J. E. (2016). La escritura académica: 30 errores habituales. <em>Quaderns de Psicología</em>, 18(1).</li>
+        <li>Carlino, P. (2004). El proceso de escritura académica. <em>Educere</em>, 8(26), 321-327.</li>
+      </ul>
+      <div class="biblio-subtitulo">Ampliatoria</div>
+      <ul>
+        <li>Babbie, E. (2000). <em>Fundamentos de la investigación social</em>. Thomson. (Cap. 1)</li>
+        <li>Daros, W. R. (2002). ¿Qué es un marco teórico? <em>Enfoques</em>, XIV(1), 73-112.</li>
+        <li>Pineda, E. B. et al. (1994). <em>Metodología de la investigación</em> (2ª ed., OPS). (Cap. 4-5)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ UNIDAD 2 ══════════════════════ -->
+<div id="pag-u2" class="pagina">
+<div class="contenido">
+  <div class="unidad-header">
+    <div class="etiq">Unidad 2</div>
+    <h2>Variables y Operacionalización</h2>
+    <div class="subtitulo">Del concepto abstracto al dato concreto y medible</div>
+    <div class="producto-badge">🎯 Producto: Matriz de operacionalización de variables</div>
+  </div>
+
+  <div class="tabs-unidad">
+    <button class="tab-btn activo" onclick="activarTab('u2','concepto',this)">Concepto</button>
+    <button class="tab-btn" onclick="activarTab('u2','tipos',this)">Tipos de variables</button>
+    <button class="tab-btn" onclick="activarTab('u2','escala',this)">Escalas de medición</button>
+    <button class="tab-btn" onclick="activarTab('u2','matriz',this)">Matrices</button>
+  </div>
+
+  <div id="u2-tab-concepto" class="tab-contenido activo">
+    <div class="seccion">
+      <div class="seccion-titulo">Concepto de variable</div>
+      <p class="texto">Una <strong>variable</strong> es cualquier característica de la realidad susceptible de cambio que puede asumir diferentes valores y cuya variación es medible u observable.</p>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Variable</th><th>Tipo s/ función</th><th>Naturaleza</th><th>Escala</th><th>Instrumento</th></tr></thead>
+          <tbody>
+            <tr><td>Edad</td><td>Atributo / Control</td><td>Cuantitativa continua</td><td>Razón</td><td>Cuestionario (años cumplidos)</td></tr>
+            <tr><td>Nivel de dolor</td><td>Dependiente</td><td>Cualitativa ordinal</td><td>Ordinal</td><td>EVA (0-10)</td></tr>
+            <tr><td>Turno de trabajo</td><td>Independiente / Atributo</td><td>Cualitativa nominal</td><td>Nominal</td><td>Ficha laboral (M/T/N/SADOFE)</td></tr>
+            <tr><td>Presión arterial sistólica</td><td>Dependiente</td><td>Cuantitativa continua</td><td>Razón</td><td>Tensiómetro (mmHg)</td></tr>
+            <tr><td>Nivel de instrucción</td><td>Independiente</td><td>Cualitativa ordinal</td><td>Ordinal</td><td>Cuestionario</td></tr>
+            <tr><td>Presencia de flebitis</td><td>Dependiente</td><td>Cualitativa dicotómica</td><td>Nominal</td><td>Escala de Madigan</td></tr>
+            <tr><td>Tiempo de espera en guardia</td><td>Dependiente</td><td>Cuantitativa continua</td><td>Razón</td><td>Cronómetro (minutos)</td></tr>
+            <tr><td>Satisfacción del paciente</td><td>Dependiente</td><td>Cualitativa ordinal</td><td>Ordinal</td><td>Escala Likert</td></tr>
+            <tr><td>Frecuencia de lavado de manos</td><td>Dependiente</td><td>Cuantitativa discreta</td><td>Razón</td><td>Guía de observación</td></tr>
+            <tr><td>Nivel de burnout</td><td>Dependiente</td><td>Cualitativa ordinal</td><td>Ordinal</td><td>Cuestionario MBI (Maslach)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="u2-tab-tipos" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Tipos de variables según función</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>Definición</th><th>Ejemplo en enfermería</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Independiente (VI)</strong></td><td>La que se supone causa o condiciona a otra. Se manipula (en experimentos) o se selecciona como factor explicativo.</td><td>Tipo de apósito utilizado (hidrogel vs. gasa convencional).</td></tr>
+            <tr><td><strong>Dependiente (VD)</strong></td><td>El efecto o resultado que se mide. Su valor depende (o se supone que depende) de la VI.</td><td>Tiempo de cicatrización de la úlcera por presión (en días).</td></tr>
+            <tr><td><strong>Confundidora</strong></td><td>Se relaciona tanto con la VI como con la VD y puede distorsionar la relación real.</td><td>Estado nutricional: afecta la cicatrización y puede ser distinto entre los grupos.</td></tr>
+            <tr><td><strong>De control</strong></td><td>Variable que el investigador mantiene constante para no interferir con los resultados.</td><td>Grado de la UPP: se estudia solo grado II en ambos grupos.</td></tr>
+            <tr><td><strong>Interviniente</strong></td><td>Actúa entre la VI y la VD, modificando la magnitud o dirección de su relación.</td><td>Motivación del personal para aplicar el nuevo protocolo.</td></tr>
+            <tr><td><strong>Atributo</strong></td><td>Característica del sujeto que no puede ser manipulada. Describe el perfil de la muestra.</td><td>Edad, género, antigüedad laboral, nivel de formación.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="u2-tab-escala" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Niveles de medición</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Escala</th><th>Características</th><th>Estadísticas posibles</th><th>Ejemplo en enfermería</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nominal</strong></td><td>Categorías sin orden. Solo 'igual' o 'diferente'. Puede ser dicotómica o politómica.</td><td>Moda, frecuencias, chi-cuadrado</td><td>Turno de trabajo (M/T/N/SADOFE). Presencia de infección (Sí/No).</td></tr>
+            <tr><td><strong>Ordinal</strong></td><td>Categorías con orden implícito pero sin distancia exacta entre ellas.</td><td>Mediana, percentiles, Spearman</td><td>Nivel de dolor (EVA 0-10). Satisfacción (Muy satisfecho → Insatisfecho).</td></tr>
+            <tr><td><strong>De Intervalo</strong></td><td>Distancias iguales entre valores, pero sin cero absoluto.</td><td>Media, desvío estándar, Pearson</td><td>Temperatura corporal en °C.</td></tr>
+            <tr><td><strong>De Razón</strong></td><td>Distancias iguales Y cero absoluto. Admite todas las operaciones.</td><td>Todas las estadísticas</td><td>Presión arterial (mmHg). Peso (kg). Edad en años.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="u2-tab-matriz" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Matrices de Operacionalización</div>
+      <p class="texto">La operacionalización es el proceso de llevar una variable del plano abstracto al plano concreto y medible. La matriz garantiza que cualquier otro investigador pueda replicar exactamente cómo se midió cada variable.</p>
+
+      <div class="sub-titulo">Cuadro 1 — Calidad del Registro de Enfermería</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Variable</th><th>Definición Conceptual</th><th>Dimensión</th><th>Medición / Instrumento</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="3"><strong>Calidad del Registro de Enfermería</strong></td><td rowspan="3">Grado de cumplimiento de las normas legales, técnicas y éticas en la documentación del proceso de atención de enfermería en la historia clínica.</td><td>Formalidad</td><td>Nominal: Cumple/No cumple — Matriz de auditoría de HC</td></tr>
+            <tr><td>Contenido / Proceso</td><td>Ordinal: 0 a 4 puntos — Matriz de auditoría de HC</td></tr>
+            <tr><td>Continuidad y oportunidad</td><td>Nominal: Completo/Incompleto — Matriz de auditoría</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-titulo">Cuadro 2 — Sobrecarga del Cuidador</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Variable</th><th>Definición Conceptual</th><th>Dimensión</th><th>Medición / Instrumento</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="3"><strong>Nivel de Sobrecarga del Cuidador</strong></td><td rowspan="3">Estado de agotamiento físico, emocional y social derivado de la demanda continua del cuidado (Zarit, 1980).</td><td>Impacto del cuidado en la vida personal</td><td>Ordinal: Puntaje total 22-110 — Escala de Zarit</td></tr>
+            <tr><td>Carga interpersonal</td><td>Ordinal (ídem) — Escala de Zarit</td></tr>
+            <tr><td>Expectativas de autoeficacia</td><td>Ordinal (ídem) — Escala de Zarit</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-titulo">Cuadro 3 — Adherencia al Tratamiento Farmacológico</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Variable</th><th>Definición Conceptual</th><th>Dimensión</th><th>Medición / Instrumento</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="2"><strong>Adherencia al Tratamiento Farmacológico</strong></td><td rowspan="2">Grado en que el comportamiento de una persona coincide con las recomendaciones acordadas con el equipo de salud (OMS, 2003).</td><td>Conductual (toma de medicación)</td><td>Nominal: Adherente/No adherente — Test de Morisky-Green</td></tr>
+            <tr><td>Cognitiva (conocimiento)</td><td>Ordinal: Adecuado/Parcial/Inadecuado — Cuestionario ad hoc</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="reflexion">
+    <h4>✅ Guía de reflexión — Unidad 2</h4>
+    <ol>
+      <li>¿Identifiqué correctamente cuál es mi VI y cuál es mi VD?</li>
+      <li>¿Existe alguna variable confundidora que deba controlar?</li>
+      <li>¿Los indicadores son concretos y medibles, o siguen siendo abstractos?</li>
+      <li>¿La escala de medición es coherente con el indicador y el instrumento?</li>
+      <li>¿Si le diera mi matriz a otro investigador, podría medir mis variables igual que yo?</li>
+    </ol>
+  </div>
+
+  <div class="biblio">
+    <div class="biblio-header">📚 Bibliografía — Unidad 2</div>
+    <div class="biblio-body">
+      <div class="biblio-subtitulo">Obligatoria</div>
+      <ul>
+        <li>Espinoza Freire, E. E. (2019). Las variables y su operacionalización. <em>Revista Conrado</em>, 15(69), 171-180.</li>
+        <li>Hernández Sampieri, R. et al. (2014). <em>Metodología de la investigación</em> (6ª ed.). McGraw-Hill. (Cap. 5-8)</li>
+        <li>Reguant, M. & Martínez-Olmo, F. (2014). <em>Operacionalización de conceptos/variables</em>. UB.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ UNIDAD 3 ══════════════════════ -->
+<div id="pag-u3" class="pagina">
+<div class="contenido">
+  <div class="unidad-header">
+    <div class="etiq">Unidad 3</div>
+    <h2>Diseño Metodológico</h2>
+    <div class="subtitulo">Enfoques · Tipos de Estudio · Población y Muestra · Ética</div>
+    <div class="producto-badge">🎯 Producto: Diseño metodológico del proyecto (Capítulo III)</div>
+  </div>
+
+  <div class="tabs-unidad">
+    <button class="tab-btn activo" onclick="activarTab('u3','enfoques',this)">Enfoques</button>
+    <button class="tab-btn" onclick="activarTab('u3','tipos',this)">Tipos de estudio</button>
+    <button class="tab-btn" onclick="activarTab('u3','muestra',this)">Población y muestra</button>
+    <button class="tab-btn" onclick="activarTab('u3','etica',this)">Ética</button>
+    <button class="tab-btn" onclick="activarTab('u3','redaccion',this)">Modelo Capítulo III</button>
+  </div>
+
+  <div id="u3-tab-enfoques" class="tab-contenido activo">
+    <div class="seccion">
+      <div class="seccion-titulo">Enfoques de investigación</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Dimensión</th><th>CUANTITATIVO</th><th>CUALITATIVO</th><th>MIXTO</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Propósito</strong></td><td>Medir, cuantificar, probar hipótesis y generalizar resultados.</td><td>Comprender significados, experiencias y vivencias en profundidad.</td><td>Combinar ambos para una comprensión más completa del fenómeno.</td></tr>
+            <tr><td><strong>Perspectiva</strong></td><td>Positivista/Objetivista. El investigador es externo.</td><td>Interpretativa/Constructivista. El investigador forma parte del proceso.</td><td>Pragmática. Se elige el método según la pregunta.</td></tr>
+            <tr><td><strong>Datos</strong></td><td>Numéricos, estadísticos.</td><td>Textuales: narrativas, discursos, observaciones.</td><td>Ambos tipos, secuencial o simultáneamente.</td></tr>
+            <tr><td><strong>Muestra</strong></td><td>Grande, probabilística. Se busca representatividad.</td><td>Pequeña, intencional. Hasta saturación teórica.</td><td>Amplia para lo cuantitativo + reducida para lo cualitativo.</td></tr>
+            <tr><td><strong>Análisis</strong></td><td>Estadístico (descriptivo e inferencial). SPSS, Excel, InfoStat.</td><td>Interpretativo. Categorías temáticas. Atlas.ti, NVivo.</td><td>Integración de resultados estadísticos y categorías temáticas.</td></tr>
+            <tr><td><strong>Ejemplo</strong></td><td>Encuesta sobre nivel de burnout en 200 enfermeros/as.</td><td>Entrevistas sobre la vivencia del duelo en UTI.</td><td>Encuesta de prevalencia de burnout + entrevistas para comprender causas percibidas.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="u3-tab-tipos" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Tipos de estudio</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Alcance</th><th>Pregunta que responde</th><th>Cuándo usarlo</th><th>Ejemplo en enfermería</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Exploratorio</strong></td><td>¿Qué existe? ¿Hay algo aquí?</td><td>Tema poco conocido, sin antecedentes suficientes.</td><td>Exploración de necesidades de enfermeros trans en el sistema de salud argentino.</td></tr>
+            <tr><td><strong>Descriptivo</strong></td><td>¿Cómo es? ¿Cuánto hay?</td><td>Fenómeno conocido pero no descrito en este contexto.</td><td>Prevalencia de UPP en adultos mayores institucionalizados del AMBA.</td></tr>
+            <tr><td><strong>Correlacional</strong></td><td>¿A y B están relacionados?</td><td>Se quiere establecer asociación estadística entre variables.</td><td>Relación entre burnout y ausentismo en enfermeros de UCI.</td></tr>
+            <tr><td><strong>Explicativo</strong></td><td>¿Por qué ocurre? ¿Qué causa qué?</td><td>Se quiere ir más allá de la asociación para determinar causas.</td><td>Factores que explican la alta rotación de personal en clínicas privadas.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-titulo">Diseños y temporalidad</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Diseño</th><th>Característica central</th><th>Temporalidad</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Experimental</strong></td><td>Manipula la VI. Aleatorización y grupo control.</td><td>Longitudinal</td><td>ECA: apósito de hidrogel vs. gasa en cicatrización de UPP grado II.</td></tr>
+            <tr><td><strong>Cuasi-experimental</strong></td><td>Intervención deliberada sin aleatorización completa.</td><td>Longitudinal (pre-post)</td><td>Taller de higiene de manos en un turno vs. otro sin taller.</td></tr>
+            <tr><td><strong>No exp. Transversal</strong></td><td>Sin manipulación. Observa en un único momento.</td><td>Transversal ("la foto")</td><td>Encuesta sobre satisfacción laboral aplicada en una semana.</td></tr>
+            <tr><td><strong>No exp. Longitudinal</strong></td><td>Sin manipulación. Múltiples momentos del tiempo.</td><td>Longitudinal</td><td>Seguimiento mensual de tasa de flebitis durante 6 meses.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="u3-tab-muestra" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Universo, Población, Muestra y Unidad de Análisis</div>
+      <div class="caja caja-concepto">
+        <div class="caja-titulo">📌 Distinción clave</div>
+        <ul>
+          <li><strong>Universo:</strong> Todos los enfermeros/as de Argentina. (Total abstracto)</li>
+          <li><strong>Población:</strong> Todos los enfermeros/as de los hospitales de la Provincia de Buenos Aires. (Accesible y delimitado)</li>
+          <li><strong>Muestra:</strong> Los 220 enfermeros/as del Municipio X seleccionados mediante muestreo estratificado.</li>
+          <li><strong>Unidad de análisis:</strong> Cada enfermero/a individual (o la historia clínica, o el turno, según el diseño).</li>
+        </ul>
+      </div>
+
+      <div class="sub-titulo">Tipos de muestreo</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>Descripción</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Aleatorio Simple</strong> (Probabilístico)</td><td>Todos tienen igual probabilidad. Sorteo con tabla de números o software.</td><td>Sortear 80 historias clínicas de las 400 del mes de junio.</td></tr>
+            <tr><td><strong>Sistemático</strong> (Probabilístico)</td><td>Selección por intervalos regulares (cada 'k' elementos).</td><td>Seleccionar al 1° paciente de cada 5 que ingresa a guardia.</td></tr>
+            <tr><td><strong>Estratificado</strong> (Probabilístico)</td><td>División en estratos y muestreo proporcional dentro de cada uno.</td><td>Muestrear proporcional por turno: 30% mañana, 30% tarde, 40% noche.</td></tr>
+            <tr><td><strong>Por Conveniencia</strong> (No probabilístico)</td><td>Sujetos más accesibles y disponibles que cumplen los criterios.</td><td>Los enfermeros del turno mañana que firmen el CI esa semana.</td></tr>
+            <tr><td><strong>Intencional</strong> (No probabilístico)</td><td>Selección deliberada de casos con características específicas.</td><td>Enfermeros/as con más de 15 años en UTI para entrevistas en profundidad.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="u3-tab-etica" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Consideraciones Éticas</div>
+      <p class="texto">Toda investigación con seres humanos debe respetar la <strong>Declaración de Helsinki</strong> (AMM, 2013), las <strong>Pautas CIOMS 2016</strong> y en Argentina la <strong>Ley N° 25.326</strong> de Protección de Datos Personales.</p>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Principio</th><th>Definición</th><th>Cómo se concreta en tu proyecto</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Beneficencia</strong></td><td>El estudio debe producir el mayor bien posible.</td><td>Explicar en la justificación qué beneficio social generará el conocimiento producido.</td></tr>
+            <tr><td><strong>No Maleficencia</strong></td><td>No causar daño. Los riesgos deben ser mínimos y justificados.</td><td>Aclarar que no hay consecuencias por no participar o retirarse.</td></tr>
+            <tr><td><strong>Autonomía</strong></td><td>Respetar la capacidad de tomar decisiones propias.</td><td>Obtener el Consentimiento Informado firmado. Participación voluntaria y revocable.</td></tr>
+            <tr><td><strong>Justicia</strong></td><td>Distribuir beneficios y cargas equitativamente.</td><td>Criterios de inclusión/exclusión técnicos, no discriminatorios.</td></tr>
+            <tr><td><strong>Confidencialidad</strong></td><td>Proteger la identidad y los datos de los participantes.</td><td>Anonimizar datos mediante códigos. No publicar información identificable.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="u3-tab-redaccion" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Modelo de Capítulo III — Diseño Metodológico</div>
+      <div class="caja caja-ejemplo">
+        <div class="caja-titulo">📄 Estructura estándar del Capítulo III</div>
+        <ul>
+          <li>3.1. Tipo de enfoque y justificación (con cita del autor metodológico)</li>
+          <li>3.2. Alcance y diseño del estudio</li>
+          <li>3.3. Universo, población y muestra (con criterios de inclusión/exclusión)</li>
+          <li>3.4. Unidad de análisis</li>
+          <li>3.5. Variables o categorías de análisis (referencia a la matriz)</li>
+          <li>3.6. Técnica e instrumento de recolección de datos</li>
+          <li>3.7. Consideraciones éticas</li>
+        </ul>
+      </div>
+
+      <div class="caja caja-concepto" style="margin-top:20px;">
+        <div class="caja-titulo">📄 Ejemplo redactado</div>
+        <p><strong>3.1. Enfoque y tipo de estudio</strong></p>
+        <p>El presente estudio se enmarcará en un enfoque cuantitativo, ya que se buscará medir y cuantificar la relación entre variables mediante análisis estadísticos (Hernández Sampieri et al., 2014). Será de alcance descriptivo-correlacional y de corte transversal, puesto que se describirán las características de las variables y se evaluará la asociación entre ellas en un único momento del tiempo, sin manipulación de las mismas.</p>
+        <p style="margin-top:12px;"><strong>3.2. Población y muestra</strong></p>
+        <p>La población accesible estará constituida por los 90 licenciados/as en enfermería que se desempeñarán en los servicios de clínica médica y guardia del Hospital Municipal X durante el primer semestre de 2026. Se utilizará un muestreo no probabilístico por conveniencia, incluyendo a todos/as los/as que cumplan con los criterios de selección.</p>
+        <p style="margin-top:12px;"><em>Criterios de inclusión: (1) matrícula vigente; (2) más de 6 meses de antigüedad en el servicio; (3) CI firmado. — Criterios de exclusión: (1) personal en licencia; (2) personal directivo sin actividad asistencial.</em></p>
+        <p style="margin-top:12px;"><strong>3.3. Consideraciones éticas</strong></p>
+        <p>El estudio respetará los principios éticos de la Declaración de Helsinki (AMM, 2013) y la Ley N° 25.326 de Protección de Datos Personales. Se garantizará el anonimato mediante códigos numéricos. La participación será voluntaria y podrá interrumpirse en cualquier momento sin consecuencias.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reflexion">
+    <h4>✅ Guía de reflexión — Unidad 3</h4>
+    <ol>
+      <li>¿Mi diseño responde coherentemente a mi pregunta y a mis objetivos?</li>
+      <li>¿Definí el universo, la población y la muestra con precisión?</li>
+      <li>¿El tipo de muestreo elegido es factible en mi contexto real de trabajo de campo?</li>
+      <li>¿Incorporé todos los aspectos éticos: consentimiento informado, anonimato, voluntariedad?</li>
+      <li>¿El capítulo metodológico está en tiempo futuro y con estilo despersonalizado?</li>
+    </ol>
+  </div>
+
+  <div class="biblio">
+    <div class="biblio-header">📚 Bibliografía — Unidad 3</div>
+    <div class="biblio-body">
+      <div class="biblio-subtitulo">Obligatoria</div>
+      <ul>
+        <li>Blanco, C. (2011). <em>Encuesta y Estadística</em>. Editorial Brujas. (Cap. 1)</li>
+        <li>Do Prado, M. L. et al. (2013). <em>Investigación cualitativa en enfermería</em>. OPS (Serie PLATEX).</li>
+        <li>Miranda Montecinos, A. (2013). Plagio y Ética de la Investigación. <em>Revista Chilena de Derecho</em>, 40(2).</li>
+        <li>Salgado, L. A. C. (2007). Investigación cualitativa: diseños y rigor. <em>Liberabit</em>, 13, 71-78.</li>
+      </ul>
+      <div class="biblio-subtitulo">Ampliatoria</div>
+      <ul>
+        <li>OPS & CIOMS. (2016). <em>Pautas éticas internacionales para la investigación en salud</em> (4ª ed.).</li>
+        <li>Monje Álvarez, C. A. (2011). <em>Metodología cuantitativa y cualitativa</em>. (Cap. 7)</li>
+        <li>Pineda, E. B. et al. (1994). <em>Metodología de la investigación</em> (2ª ed., OPS). (Cap. 6-8)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ UNIDAD 4 ══════════════════════ -->
+<div id="pag-u4" class="pagina">
+<div class="contenido">
+  <div class="unidad-header">
+    <div class="etiq">Unidad 4</div>
+    <h2>Diseño del Instrumento y Trabajo de Campo</h2>
+    <div class="subtitulo">Técnicas · Instrumentos · Validez · Confiabilidad · Prueba Piloto</div>
+    <div class="producto-badge">🎯 Producto: Instrumento finalizado + documentación de la prueba piloto</div>
+  </div>
+
+  <div class="tabs-unidad">
+    <button class="tab-btn activo" onclick="activarTab('u4','tecnicas',this)">Técnicas e instrumentos</button>
+    <button class="tab-btn" onclick="activarTab('u4','validez',this)">Validez y confiabilidad</button>
+    <button class="tab-btn" onclick="activarTab('u4','piloto',this)">Prueba piloto</button>
+    <button class="tab-btn" onclick="activarTab('u4','ci',this)">Consentimiento informado</button>
+  </div>
+
+  <div id="u4-tab-tecnicas" class="tab-contenido activo">
+    <div class="seccion">
+      <div class="seccion-titulo">Técnicas e instrumentos de recolección</div>
+      <div class="caja caja-concepto">
+        <div class="caja-titulo">📌 Distinción fundamental</div>
+        <ul>
+          <li><strong>Técnica:</strong> El procedimiento metodológico. El "cómo". Ej: Observación, Encuesta, Entrevista, Análisis documental.</li>
+          <li><strong>Instrumento:</strong> El soporte físico o digital que registra la información. El "con qué". Ej: Lista de cotejo, Cuestionario, Guía de entrevista, Ficha de registro.</li>
+        </ul>
+      </div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Técnica</th><th>Instrumento/s posibles</th><th>Cuándo usarla</th><th>Ejemplo en enfermería</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Observación</strong></td><td>Lista de cotejo, Guía de observación, Escala de estimación, Diario de campo</td><td>Cuando la conducta observable es más fiable que el autorreporte.</td><td>Observar si el personal respeta los 5 momentos del lavado de manos.</td></tr>
+            <tr><td><strong>Encuesta</strong></td><td>Cuestionario cerrado, Escala Likert, Test de conocimientos, EVA adaptada</td><td>Cuando se necesita información estandarizada de grupos numerosos.</td><td>Evaluar conocimientos sobre prevención de caídas.</td></tr>
+            <tr><td><strong>Entrevista</strong></td><td>Guía estructurada, semiestructurada, abierta, Guía de grupo focal</td><td>Cuando se busca profundidad en experiencias y percepciones.</td><td>Conocer la vivencia tras un evento adverso crítico.</td></tr>
+            <tr><td><strong>Análisis documental</strong></td><td>Matriz de registro de HC, Ficha de cotejo, Grilla de auditoría</td><td>Cuando los datos existen en registros previos.</td><td>Revisar historias clínicas para verificar completitud del registro.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="u4-tab-validez" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Validez y confiabilidad</div>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Concepto</th><th>Definición</th><th>Método</th><th>Resultado esperado</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Validez de Contenido</strong></td><td>El instrumento cubre todas las dimensiones e indicadores del concepto que pretende medir.</td><td>Juicio de expertos (mínimo 3, ideal 5). Grilla de evaluación por ítem: relevancia, claridad, coherencia.</td><td>"El instrumento fue sometido a validación por 5 expertos. Las sugerencias fueron incorporadas en la versión final."</td></tr>
+            <tr><td><strong>Validez de Constructo</strong></td><td>Los ítems representan adecuadamente el constructo teórico subyacente.</td><td>Análisis factorial o correlación con instrumento ya validado.</td><td>Justificar que cada ítem se desprende de la definición operacional de la variable.</td></tr>
+            <tr><td><strong>Confiabilidad (Consistencia Interna)</strong></td><td>El instrumento produce resultados consistentes en condiciones similares.</td><td>Alfa de Cronbach (α). Aplicar a ≥30 personas con software estadístico.</td><td>α &gt; 0.90: excelente · α 0.80-0.89: muy buena · α 0.70-0.79: aceptable · α &lt; 0.70: revisar</td></tr>
+            <tr><td><strong>Confiabilidad (Test-Retest)</strong></td><td>Los resultados son estables si se aplica dos veces al mismo grupo en condiciones similares.</td><td>Correlación de Pearson o Spearman entre dos aplicaciones separadas 15-30 días.</td><td>r &gt; 0.80 indica estabilidad temporal adecuada.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="u4-tab-piloto" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">La prueba piloto</div>
+      <p class="texto">La prueba piloto es un <strong>ensayo controlado del instrumento</strong> con un grupo pequeño (5-15 personas) que tiene características similares a la muestra final, pero que <strong>NO formará parte del estudio definitivo</strong>.</p>
+      <div class="tabla-wrap">
+        <table>
+          <thead><tr><th>Etapa</th><th>Qué hacer</th><th>Qué evaluar</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1. Selección</strong></td><td>Seleccionar 5-15 personas con perfil similar a la muestra final.</td><td>¿El grupo cumple los criterios de inclusión?</td></tr>
+            <tr><td><strong>2. Aplicación</strong></td><td>Administrar el instrumento en condiciones reales. Cronometrar.</td><td>¿Cuánto tardaron? ¿Hubo dudas frecuentes?</td></tr>
+            <tr><td><strong>3. Revisión</strong></td><td>Analizar blancos, respuestas extremas, comentarios al margen.</td><td>¿Algún ítem en blanco por más del 20%? → Revisar o eliminar.</td></tr>
+            <tr><td><strong>4. Ajuste</strong></td><td>Reformular ítems problemáticos. Eliminar redundantes. Ajustar extensión.</td><td>¿El instrumento revisado mantiene coherencia con la matriz de variables?</td></tr>
+            <tr><td><strong>5. Documentación</strong></td><td>Redactar el párrafo de prueba piloto para incluir en la metodología.</td><td>¿Puede otro investigador replicar exactamente lo que hiciste?</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="caja caja-ejemplo">
+        <div class="caja-titulo">📄 Ejemplo de redacción para el Capítulo III</div>
+        <p>"Se llevará a cabo una prueba piloto con 10 enfermeros/as del turno tarde del Servicio de Clínica Quirúrgica, quienes no formarán parte de la muestra definitiva. Como resultado, se detectará que el ítem n° 8 resultará ambiguo para 7 de los 10 participantes; en consecuencia, se reformulará. El tiempo promedio de respuesta será de 22 minutos, superando el previsto; se eliminarán 4 ítems secundarios, ajustando el tiempo a 15 minutos."</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="u4-tab-ci" class="tab-contenido">
+    <div class="seccion">
+      <div class="seccion-titulo">Modelo de Consentimiento Informado</div>
+      <div class="caja caja-concepto">
+        <div class="caja-titulo">📌 Elementos obligatorios del CI</div>
+        <ul>
+          <li>Título del proyecto e investigador/a responsable</li>
+          <li>Propósito del estudio (en lenguaje accesible)</li>
+          <li>¿Qué implica la participación? (tiempo, actividades)</li>
+          <li>Riesgos y beneficios</li>
+          <li>Confidencialidad y anonimato</li>
+          <li>Voluntariedad y posibilidad de retiro sin consecuencias</li>
+          <li>Firma del/la participante y del/la investigador/a</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="reflexion">
+    <h4>✅ Guía de reflexión — Unidad 4</h4>
+    <ol>
+      <li>¿Cada variable de mi matriz tiene al menos un ítem en el instrumento?</li>
+      <li>¿La técnica elegida es coherente con el enfoque cuantitativo o cualitativo del estudio?</li>
+      <li>¿Las instrucciones del instrumento son claras para alguien que nunca vio el estudio?</li>
+      <li>¿Planifiqué la validación por expertos? ¿Ya identifiqué quiénes serán?</li>
+      <li>¿Realicé o tengo planeada la prueba piloto con sujetos fuera de la muestra final?</li>
+      <li>¿El Consentimiento Informado cubre todos los aspectos éticos?</li>
+    </ol>
+  </div>
+
+  <div class="biblio">
+    <div class="biblio-header">📚 Bibliografía — Unidad 4</div>
+    <div class="biblio-body">
+      <div class="biblio-subtitulo">Obligatoria</div>
+      <ul>
+        <li>Blanco, C. (2011). <em>Encuesta y Estadística</em>. Editorial Brujas. (Cap. 2)</li>
+        <li>Hernández Sampieri, R. et al. (2014). <em>Metodología de la investigación</em> (6ª ed.). McGraw-Hill. (Cap. 9-14)</li>
+        <li>Guevara Valtier, M. C. et al. (2017). <em>Protocolos de investigación en enfermería</em>. El Manual Moderno. (Cap. 9)</li>
+        <li>Monje Álvarez, C. A. (2011). <em>Metodología cuantitativa y cualitativa</em>. (Cap. 8-9)</li>
+        <li>Cabezas, M. E. D. et al. (2018). <em>Introducción a la metodología de la investigación</em>. ESPE. (Cap. 5)</li>
+      </ul>
+      <div class="biblio-subtitulo">Ampliatoria</div>
+      <ul>
+        <li>Corral de Franco, Y. (2022). Validez y confiabilidad en instrumentos. <em>Revista Ciencias de la Educación</em>, 32(60), 562-586.</li>
+        <li>Jiménez Herrera, M. (2025). <em>Guía práctica de validez y confiabilidad</em>. Universidad del Desarrollo.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ PRÁCTICA ══════════════════════ -->
+<div id="pag-practica" class="pagina">
+<div class="contenido">
+
+  <div class="practica-hero">
+    <h2>✏️ Módulo de Práctica</h2>
+    <p>Ejercitá con los mismos tipos de preguntas de las evaluaciones. Respondé, verificá y leé la retroalimentación.</p>
+    <div class="modo-selector">
+      <button class="modo-btn activo" onclick="filtrarPreguntas('todas',this)">Todas</button>
+      <button class="modo-btn" onclick="filtrarPreguntas('u1',this)">Unidad 1</button>
+      <button class="modo-btn" onclick="filtrarPreguntas('u2',this)">Unidad 2</button>
+      <button class="modo-btn" onclick="filtrarPreguntas('u3',this)">Unidad 3</button>
+      <button class="modo-btn" onclick="filtrarPreguntas('u4',this)">Unidad 4</button>
+    </div>
+  </div>
+
+  <div class="progreso-bar-wrap">
+    <span class="progreso-texto" id="progreso-txt">0 / 0 respondidas</span>
+    <div class="barra-bg"><div class="barra-fill" id="barra-fill" style="width:0%"></div></div>
+    <span class="puntaje-total" id="puntaje-txt">0 pts</span>
+  </div>
+
+  <div id="preguntas-container"></div>
+
+  <div id="resultado-final" class="resultado-final">
+    <p>Resultado final</p>
+    <div class="nota-grande" id="nota-final">—</div>
+    <div class="comentario" id="comentario-final"></div>
+    <p id="detalle-final"></p>
+    <button class="btn-reset" onclick="reiniciarTodo()" style="margin-top:20px;">🔄 Volver a intentar</button>
+  </div>
+
+</div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  BANCO DE PREGUNTAS
+// ════════════════════════════════════════════════════════════
+const BANCO = [
+
+  // ── RELACIONAR ────────────────────────────────────────────
+  {
+    id: 'rel1', tipo: 'relacionar', unidad: 'u1', pts: 12,
+    enunciado: 'Relacioná cada concepto con su definición correcta. (2 pts c/u)',
+    pares: [
+      { concepto: 'a. Variable dependiente',    def: '1. Resultado que se mide en el estudio' },
+      { concepto: 'b. Muestreo probabilístico', def: '2. Selección aleatoria de sujetos' },
+      { concepto: 'c. Grupo experimental',      def: '3. Grupo al que se le aplica la intervención' },
+      { concepto: 'd. Marco teórico',           def: '4. Sustento conceptual basado en antecedentes' },
+      { concepto: 'e. Validez interna',         def: '5. Grado en que el diseño evita sesgos' },
+      { concepto: 'f. Muestreo no probabilístico', def: '6. Selección intencional de participantes' },
+    ],
+    respuestas: { a:'1', b:'2', c:'3', d:'4', e:'5', f:'6' },
+  },
+  {
+    id: 'rel2', tipo: 'relacionar', unidad: 'u2', pts: 10,
+    enunciado: 'Relacioná cada variable con su escala de medición. (2 pts c/u)',
+    pares: [
+      { concepto: 'a. Turno de trabajo (M/T/N)',        def: '1. Razón' },
+      { concepto: 'b. Nivel de dolor (EVA 0-10)',        def: '2. Nominal' },
+      { concepto: 'c. Presión arterial sistólica (mmHg)',def: '3. Ordinal' },
+      { concepto: 'd. Satisfacción del paciente',        def: '4. Intervalo' },
+      { concepto: 'e. Temperatura corporal en °C',       def: '5. Ordinal' },
+    ],
+    respuestas: { a:'2', b:'3', c:'1', d:'5', e:'4' },
+  },
+
+  // ── COMPLETAR ────────────────────────────────────────────
+  {
+    id: 'comp1', tipo: 'opcion', unidad: 'u1', pts: 4,
+    enunciado: 'El problema de investigación debe estar delimitado en términos de...',
+    opciones: [
+      'variables, población, tiempo y espacio.',
+      'estadísticas, gráficos, tablas y análisis.',
+      'opiniones del investigador y datos cualitativos.',
+      'hipótesis nulas, alternativas y bilaterales.',
+    ],
+    correcta: 0,
+    feedback: 'Correcto. Toda pregunta de investigación debe contener: variable/s o fenómeno, población, espacio geográfico/institucional y tiempo o período de estudio.',
+  },
+  {
+    id: 'comp2', tipo: 'opcion', unidad: 'u2', pts: 4,
+    enunciado: 'La operacionalización de variables consiste en...',
+    opciones: [
+      'enumerar todas las variables posibles en un estudio.',
+      'llevar una variable del plano abstracto al plano concreto y medible a través de dimensiones e indicadores.',
+      'calcular el tamaño de la muestra necesaria para el estudio.',
+      'seleccionar el tipo de estadística a utilizar en el análisis de datos.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. La operacionalización es el proceso de llevar una variable de un nivel abstracto (conceptual) a uno concreto (medible), definiendo dimensiones, indicadores, nivel de medición e instrumento.',
+  },
+  {
+    id: 'comp3', tipo: 'opcion', unidad: 'u3', pts: 4,
+    enunciado: 'Un estudio transversal se caracteriza por...',
+    opciones: [
+      'seguir a los participantes durante varios años para observar cambios.',
+      'recolectar datos en un único momento del tiempo, como una "fotografía" del fenómeno.',
+      'manipular la variable independiente con asignación aleatoria a los grupos.',
+      'utilizar exclusivamente técnicas cualitativas de recolección de datos.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. El estudio transversal recolecta datos en un solo momento del tiempo. No implica seguimiento ni manipulación de variables.',
+  },
+  {
+    id: 'comp4', tipo: 'opcion', unidad: 'u3', pts: 4,
+    enunciado: 'La muestra es diferente de la población porque...',
+    opciones: [
+      'la muestra incluye a todos los sujetos del universo.',
+      'la muestra es el subgrupo representativo de la población que efectivamente participará en el estudio.',
+      'la muestra siempre se obtiene mediante muestreo aleatorio simple.',
+      'la muestra no puede ser generalizada a ningún contexto.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. La muestra es el subgrupo de la población accesible que participará en el estudio. La población es el conjunto finito y delimitado de elementos con las características de interés.',
+  },
+
+  // ── ANALIZAR CASO ─────────────────────────────────────────
+  {
+    id: 'anal1', tipo: 'opcion', unidad: 'u1', pts: 4,
+    enunciado: '<strong>ANALICE el planteo:</strong> "Evaluar el impacto de un programa de capacitación en higiene de manos dirigido al personal de enfermería de una UTI de un hospital público de CABA, julio–septiembre 2025." — ¿Cuál es la variable independiente?',
+    opciones: [
+      'La incidencia de infecciones intrahospitalarias.',
+      'El programa de capacitación en higiene de manos.',
+      'El nivel de conocimientos del personal.',
+      'El período julio–septiembre 2025.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. La variable independiente (VI) es la que el investigador manipula o selecciona como factor explicativo: en este caso, el programa de capacitación (la intervención). La VD sería el resultado medido: nivel de adherencia a la higiene de manos o incidencia de infecciones.',
+  },
+  {
+    id: 'anal2', tipo: 'opcion', unidad: 'u1', pts: 4,
+    enunciado: '<strong>ANALICE el planteo:</strong> Mismo caso anterior — ¿Qué instrumento podría utilizarse para medir la variable dependiente?',
+    opciones: [
+      'Una escala de Likert sobre satisfacción laboral.',
+      'Una lista de cotejo de los pasos del lavado de manos (observación).',
+      'Un tensiómetro digital para medir presión arterial.',
+      'Un cuestionario sobre clima organizacional.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. Si la VD es la adherencia a la higiene de manos, el instrumento más adecuado es una lista de cotejo o guía de observación que permita verificar si el personal cumple o no con cada paso del protocolo de la OMS.',
+  },
+
+  // ── IDENTIFICAR ERROR ─────────────────────────────────────
+  {
+    id: 'err1', tipo: 'opcion', unidad: 'u1', pts: 6,
+    enunciado: '<strong>IDENTIFIQUE el error:</strong> "El objetivo general de esta investigación es describiendo el nivel de satisfacción laboral en enfermeros para mejorar la calidad del hospital." — ¿Cuál es el error metodológico en la redacción?',
+    opciones: [
+      'El tema es demasiado amplio para ser investigado.',
+      'El verbo está en gerundio ("describiendo") y no en infinitivo; además "mejorar la calidad" es una acción de intervención, no un objetivo de investigación.',
+      'No menciona el instrumento de recolección de datos.',
+      'Falta el marco teórico de referencia en el enunciado.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. Dos errores: (1) el verbo debe ser infinitivo ("Describir", no "describiendo"); (2) "para mejorar la calidad del hospital" es una acción de intervención, no un objetivo de investigación. Versión correcta: "Determinar el nivel de satisfacción laboral en el personal de enfermería del Hospital X durante el primer semestre de 2026."',
+  },
+  {
+    id: 'err2', tipo: 'opcion', unidad: 'u3', pts: 4,
+    enunciado: '<strong>IDENTIFIQUE el error:</strong> "Se seleccionarán los 30 enfermeros que estén disponibles el día de la visita. Este procedimiento corresponde a un muestreo probabilístico aleatorio simple."',
+    opciones: [
+      'El tamaño de la muestra es insuficiente para cualquier estudio.',
+      'El procedimiento descrito corresponde a un muestreo por conveniencia (no probabilístico), no a uno aleatorio simple.',
+      'No se menciona el consentimiento informado.',
+      'El estudio debería tener grupo control para ser válido.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. Seleccionar a quienes "están disponibles" es muestreo por conveniencia (no probabilístico). El muestreo aleatorio simple requiere que todos los sujetos de la población tengan igual probabilidad de ser seleccionados, usando sorteo o tabla de números aleatorios.',
+  },
+
+  // ── VERDADERO / FALSO ──────────────────────────────────────
+  {
+    id: 'vf1', tipo: 'vof', unidad: 'u3', pts: 2,
+    enunciado: 'Un estudio transversal permite establecer relaciones causa-efecto si la muestra es grande.',
+    correcta: false,
+    feedback: 'FALSO. El diseño transversal no permite establecer relaciones de causalidad porque los datos se recolectan en un único momento del tiempo. Para establecer causa-efecto se requiere un diseño experimental o cuasi-experimental con mediciones longitudinales.',
+  },
+  {
+    id: 'vf2', tipo: 'vof', unidad: 'u3', pts: 2,
+    enunciado: 'El muestreo por conveniencia es un tipo de muestreo probabilístico.',
+    correcta: false,
+    feedback: 'FALSO. El muestreo por conveniencia es NO probabilístico: los sujetos se seleccionan por accesibilidad, no por azar. No permite garantizar representatividad estadística ni generalizar con rigor.',
+  },
+  {
+    id: 'vf3', tipo: 'vof', unidad: 'u1', pts: 2,
+    enunciado: 'La hipótesis siempre debe formularse en estudios cualitativos.',
+    correcta: false,
+    feedback: 'FALSO. Las hipótesis formales (en sentido estadístico) son propias de los estudios cuantitativos. Los estudios cualitativos trabajan con supuestos, posicionamientos del investigador o preguntas orientadoras, no con hipótesis a contrastar estadísticamente.',
+  },
+  {
+    id: 'vf4', tipo: 'vof', unidad: 'u2', pts: 2,
+    enunciado: 'La operacionalización permite transformar conceptos abstractos en variables medibles.',
+    correcta: true,
+    feedback: 'VERDADERO. La operacionalización es exactamente ese proceso: llevar una variable del nivel conceptual/abstracto al nivel empírico/medible, a través de la definición de dimensiones, indicadores, nivel de medición e instrumento.',
+  },
+  {
+    id: 'vf5', tipo: 'vof', unidad: 'u4', pts: 2,
+    enunciado: 'La observación no participante implica que el investigador interviene activamente en la situación estudiada.',
+    correcta: false,
+    feedback: 'FALSO. En la observación NO participante, el investigador observa desde afuera sin involucrarse en las actividades del grupo. Es la observación PARTICIPANTE la que implica integración e interacción activa del investigador con los sujetos.',
+  },
+  {
+    id: 'vf6', tipo: 'vof', unidad: 'u4', pts: 2,
+    enunciado: 'Una encuesta estructurada se caracteriza por preguntas previamente definidas y respuestas estandarizadas.',
+    correcta: true,
+    feedback: 'VERDADERO. La encuesta estructurada (cuestionario cerrado) tiene preguntas y opciones de respuesta predefinidas, lo que facilita la comparación entre sujetos y el análisis estadístico.',
+  },
+  {
+    id: 'vf7', tipo: 'vof', unidad: 'u4', pts: 2,
+    enunciado: 'En una entrevista semiestructurada, el investigador puede modificar el orden de las preguntas según la dinámica de la conversación.',
+    correcta: true,
+    feedback: 'VERDADERO. La entrevista semiestructurada tiene ejes temáticos y preguntas guía predefinidos, pero permite flexibilidad: el investigador puede cambiar el orden, repreguntar y explorar aspectos emergentes no previstos.',
+  },
+  {
+    id: 'vf8', tipo: 'vof', unidad: 'u4', pts: 2,
+    enunciado: 'La observación estructurada requiere previamente una lista de chequeo o guía de registro.',
+    correcta: true,
+    feedback: 'VERDADERO. La observación estructurada utiliza categorías o ítems predefinidos (lista de cotejo, escala de estimación) para registrar conductas específicas. Su fortaleza es la sistematicidad y la posibilidad de cuantificar los datos.',
+  },
+  {
+    id: 'vf9', tipo: 'vof', unidad: 'u4', pts: 2,
+    enunciado: 'Si un instrumento fue validado en otro país, no requiere adaptación cultural.',
+    correcta: false,
+    feedback: 'FALSO. Todo instrumento validado en otro contexto cultural e idiomático requiere un proceso de adaptación: traducción, retrotraducción, validación de contenido con expertos locales y prueba piloto con la población objetivo del nuevo contexto.',
+  },
+
+  // ── ANÁLISIS DE ARTÍCULO ──────────────────────────────────
+  {
+    id: 'art1', tipo: 'opcion', unidad: 'u3', pts: 6,
+    enunciado: '<strong>ANÁLISIS DE ARTÍCULO:</strong> Fragmento: <em>"Durante cuatro semanas se observaron prácticas asistenciales en distintos turnos, registrando el cumplimiento de los pasos del protocolo. Además, se recabó información mediante un instrumento estructurado sobre la percepción del personal..."</em> — ¿Qué enfoque metodológico se infiere?',
+    opciones: [
+      'Exclusivamente cualitativo, porque se observaron prácticas en el contexto natural.',
+      'Mixto, porque se combina la observación (datos cualitativos/cuantitativos) con un instrumento estructurado (datos cuantitativos).',
+      'Exclusivamente cuantitativo experimental, porque hay un grupo control.',
+      'Etnográfico puro, porque el investigador estuvo inmerso durante 4 semanas.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. El estudio utiliza dos técnicas: (1) observación del cumplimiento del protocolo (que produce datos cuantitativos —porcentaje de cumplimiento—) y (2) un instrumento estructurado sobre percepciones. Esta combinación indica un enfoque mixto, integrando datos observacionales con datos de encuesta.',
+  },
+  {
+    id: 'art2', tipo: 'opcion', unidad: 'u3', pts: 6,
+    enunciado: '<strong>ANÁLISIS DE ARTÍCULO (mismo caso):</strong> ¿A qué tipo de diseño metodológico pertenece?',
+    opciones: [
+      'Experimental aleatorizado con grupo control.',
+      'Descriptivo transversal, porque se observó durante un período acotado sin manipulación de variables.',
+      'Longitudinal prospectivo con seguimiento de cohorte.',
+      'Cuasi-experimental pre-post sin grupo control.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. Es un diseño descriptivo (no hay manipulación de variables) y transversal (los datos se recolectan en un período acotado —4 semanas— sin seguimiento posterior). El objetivo es describir el nivel de cumplimiento de un protocolo.',
+  },
+  {
+    id: 'art3', tipo: 'opcion', unidad: 'u4', pts: 6,
+    enunciado: '<strong>ANÁLISIS DE ARTÍCULO (mismo caso):</strong> ¿Qué técnicas de recolección de datos se utilizaron?',
+    opciones: [
+      'Entrevista en profundidad y análisis documental.',
+      'Observación estructurada de prácticas + encuesta mediante instrumento estructurado.',
+      'Grupo focal y escala de estimación.',
+      'Análisis de historias clínicas y test de conocimientos.',
+    ],
+    correcta: 1,
+    feedback: 'Correcto. El fragmento describe explícitamente dos técnicas: (1) observación de prácticas en distintos turnos (técnica: observación; instrumento: lista de cotejo o guía de observación) y (2) recabado de información mediante instrumento estructurado (técnica: encuesta; instrumento: cuestionario).',
+  },
+];
+
+// ════════════════════════════════════════════════════════════
+//  ESTADO
+// ════════════════════════════════════════════════════════════
+let estado = {}; // id -> {respondida, correcta, ptsObtenidos}
+let filtroActual = 'todas';
+
+function preguntasVisibles() {
+  return filtroActual === 'todas'
+    ? BANCO
+    : BANCO.filter(p => p.unidad === filtroActual);
+}
+
+// ════════════════════════════════════════════════════════════
+//  NAVEGACIÓN
+// ════════════════════════════════════════════════════════════
+function mostrarPag(id, btn) {
+  document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('pag-' + id).classList.add('activa');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function activarTab(unidad, tab, btn) {
+  document.querySelectorAll(`#pag-${unidad} .tab-contenido`).forEach(t => t.classList.remove('activo'));
+  document.querySelectorAll(`#pag-${unidad} .tab-btn`).forEach(b => b.classList.remove('activo'));
+  document.getElementById(`${unidad}-tab-${tab}`).classList.add('activo');
+  if (btn) btn.classList.add('activo');
+}
+
+// ════════════════════════════════════════════════════════════
+//  FILTRO
+// ════════════════════════════════════════════════════════════
+function filtrarPreguntas(filtro, btn) {
+  filtroActual = filtro;
+  document.querySelectorAll('.modo-btn').forEach(b => b.classList.remove('activo'));
+  if (btn) btn.classList.add('activo');
+  renderPreguntas();
+  actualizarProgreso();
+}
+
+// ════════════════════════════════════════════════════════════
+//  RENDER
+// ════════════════════════════════════════════════════════════
+function renderPreguntas() {
+  const container = document.getElementById('preguntas-container');
+  const visibles = preguntasVisibles();
+  container.innerHTML = '';
+  visibles.forEach(p => container.appendChild(renderPregunta(p)));
+  document.getElementById('resultado-final').classList.remove('visible');
+}
+
+function tipoLabel(tipo) {
+  return { opcion:'Opción múltiple', vof:'Verdadero / Falso', relacionar:'Relacionar', abierta:'Respuesta abierta' }[tipo] || tipo;
+}
+function unidadLabel(u) {
+  return { u1:'Unidad 1', u2:'Unidad 2', u3:'Unidad 3', u4:'Unidad 4' }[u] || u;
+}
+
+function renderPregunta(p) {
+  const card = document.createElement('div');
+  card.className = 'pregunta-card';
+  card.id = 'card-' + p.id;
+  card.innerHTML = `
+    <div class="pregunta-meta">
+      <span class="badge-tipo">${tipoLabel(p.tipo)}</span>
+      <span class="badge-unidad">${unidadLabel(p.unidad)}</span>
+      <span class="badge-pts">${p.pts} pts</span>
+    </div>
+    <div class="pregunta-enunciado">${p.enunciado}</div>
+    <div id="cuerpo-${p.id}"></div>
+    <div>
+      <button class="btn-verificar" id="btn-${p.id}" onclick="verificar('${p.id}')">Verificar</button>
+      <button class="btn-reset" onclick="resetear('${p.id}')">Reiniciar</button>
+    </div>
+    <div class="feedback" id="fb-${p.id}"></div>
+  `;
+  const cuerpo = card.querySelector(`#cuerpo-${p.id}`);
+  if (p.tipo === 'opcion')    cuerpo.innerHTML = renderOpciones(p);
+  if (p.tipo === 'vof')       cuerpo.innerHTML = renderVoF(p);
+  if (p.tipo === 'relacionar')cuerpo.innerHTML = renderRelacionar(p);
+  if (p.tipo === 'abierta')   cuerpo.innerHTML = renderAbierta(p);
+  return card;
+}
+
+function renderOpciones(p) {
+  return `<div class="opciones">${p.opciones.map((o,i)=>`
+    <button class="opcion" id="op-${p.id}-${i}" onclick="seleccionarOpcion('${p.id}',${i})">
+      <span class="opcion-letra">${'ABCD'[i]}</span><span>${o}</span>
+    </button>`).join('')}</div>`;
+}
+
+function renderVoF(p) {
+  return `<div class="vof-opciones">
+    <button class="vof-btn" id="vof-${p.id}-true"  onclick="seleccionarVoF('${p.id}',true)">✓ Verdadero</button>
+    <button class="vof-btn" id="vof-${p.id}-false" onclick="seleccionarVoF('${p.id}',false)">✗ Falso</button>
+  </div>`;
+}
+
+function renderRelacionar(p) {
+  const letras = p.pares.map(par => par.concepto.split('.')[0].trim());
+  const defs   = p.pares.map(par => par.def);
+  const nums   = p.pares.map(par => par.def.split('.')[0].trim());
+
+  let html = '<div class="relacionar-grid"><div class="col-rel"><h5>Conceptos</h5>';
+  p.pares.forEach((par, i) => {
+    const letra = par.concepto.split('.')[0].trim();
+    html += `<div class="rel-item" style="cursor:default">${par.concepto}</div>`;
+  });
+  html += '</div><div class="col-rel"><h5>Definiciones</h5>';
+  p.pares.forEach((par, i) => {
+    const letra = par.concepto.split('.')[0].trim();
+    const num   = par.def.split('.')[0].trim();
+    html += `<select class="rel-select" id="rel-${p.id}-${letra}">
+      <option value="">— elegir —</option>
+      ${p.pares.map(d => `<option value="${d.def.split('.')[0].trim()}">${d.def}</option>`).join('')}
+    </select>`;
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function renderAbierta(p) {
+  return `<textarea class="resp-abierta" id="ta-${p.id}" placeholder="Escribí tu respuesta aquí..."></textarea>`;
+}
+
+// ════════════════════════════════════════════════════════════
+//  SELECCIÓN
+// ════════════════════════════════════════════════════════════
+let selecciones = {};
+
+function seleccionarOpcion(id, idx) {
+  if (estado[id]?.respondida) return;
+  selecciones[id] = idx;
+  const p = BANCO.find(x => x.id === id);
+  p.opciones.forEach((_,i) => {
+    const btn = document.getElementById(`op-${id}-${i}`);
+    btn.classList.toggle('seleccionada', i === idx);
+  });
+}
+
+function seleccionarVoF(id, val) {
+  if (estado[id]?.respondida) return;
+  selecciones[id] = val;
+  document.getElementById(`vof-${id}-true`).classList.toggle('seleccionado', val === true);
+  document.getElementById(`vof-${id}-false`).classList.toggle('seleccionado', val === false);
+}
+
+// ════════════════════════════════════════════════════════════
+//  VERIFICAR
+// ════════════════════════════════════════════════════════════
+function verificar(id) {
+  const p = BANCO.find(x => x.id === id);
+  if (estado[id]?.respondida) return;
+
+  let ok = false, ptsObtenidos = 0;
+  const fb = document.getElementById('fb-' + id);
+
+  if (p.tipo === 'opcion') {
+    const sel = selecciones[id];
+    if (sel === undefined) { fb.innerHTML='<strong>Seleccioná una opción.</strong>'; fb.className='feedback visible mal'; return; }
+    ok = sel === p.correcta;
+    p.opciones.forEach((_,i) => {
+      const btn = document.getElementById(`op-${id}-${i}`);
+      btn.classList.remove('seleccionada');
+      if (i === p.correcta) btn.classList.add('correcta');
+      else if (i === sel && !ok) btn.classList.add('incorrecta');
+    });
+    ptsObtenidos = ok ? p.pts : 0;
+    fb.innerHTML = `<strong>${ok ? '✅ ¡Correcto!' : '❌ Incorrecto.'}</strong> ${p.feedback}`;
+    fb.className = `feedback visible ${ok ? 'ok' : 'mal'}`;
+  }
+
+  if (p.tipo === 'vof') {
+    const sel = selecciones[id];
+    if (sel === undefined) { fb.innerHTML='<strong>Seleccioná Verdadero o Falso.</strong>'; fb.className='feedback visible mal'; return; }
+    ok = sel === p.correcta;
+    document.getElementById(`vof-${id}-true`).classList.remove('seleccionado');
+    document.getElementById(`vof-${id}-false`).classList.remove('seleccionado');
+    document.getElementById(`vof-${id}-${p.correcta}`).classList.add('correcto');
+    if (!ok) document.getElementById(`vof-${id}-${sel}`).classList.add('incorrecto');
+    ptsObtenidos = ok ? p.pts : 0;
+    fb.innerHTML = `<strong>${ok ? '✅ ¡Correcto!' : '❌ Incorrecto.'}</strong> ${p.feedback}`;
+    fb.className = `feedback visible ${ok ? 'ok' : 'mal'}`;
+  }
+
+  if (p.tipo === 'relacionar') {
+    let aciertos = 0;
+    Object.entries(p.respuestas).forEach(([letra, numCorr]) => {
+      const sel = document.getElementById(`rel-${id}-${letra}`);
+      if (!sel) return;
+      const val = sel.value;
+      if (!val) return;
+      if (val === numCorr) { sel.classList.add('correcto'); aciertos++; }
+      else { sel.classList.add('incorrecto'); }
+    });
+    const total = Object.keys(p.respuestas).length;
+    ptsObtenidos = Math.round((aciertos / total) * p.pts);
+    ok = aciertos === total;
+    fb.innerHTML = `<strong>${ok ? '✅ ¡Perfecto!' : `✏️ ${aciertos} de ${total} correctos.`}</strong> Obtuviste ${ptsObtenidos} de ${p.pts} puntos. Revisá los marcados en rojo.`;
+    fb.className = `feedback visible ${ok ? 'ok' : 'mal'}`;
+  }
+
+  if (p.tipo === 'abierta') {
+    const texto = document.getElementById(`ta-${id}`)?.value?.trim();
+    if (!texto) { fb.innerHTML='<strong>Escribí tu respuesta antes de verificar.</strong>'; fb.className='feedback visible mal'; return; }
+    ptsObtenidos = Math.round(p.pts * 0.5); // puntaje parcial para respuesta abierta
+    fb.innerHTML = `<strong>📋 Respuesta de referencia:</strong> ${p.feedback}`;
+    fb.className = 'feedback visible modelo';
+    ok = true;
+  }
+
+  estado[id] = { respondida: true, correcta: ok, ptsObtenidos };
+  document.getElementById(`btn-${id}`).disabled = true;
+  actualizarProgreso();
+}
+
+// ════════════════════════════════════════════════════════════
+//  PROGRESO
+// ════════════════════════════════════════════════════════════
+function actualizarProgreso() {
+  const visibles = preguntasVisibles();
+  const respondidas = visibles.filter(p => estado[p.id]?.respondida).length;
+  const total = visibles.length;
+  const ptsMax = visibles.reduce((s,p) => s + p.pts, 0);
+  const ptsObtenidos = visibles.reduce((s,p) => s + (estado[p.id]?.ptsObtenidos || 0), 0);
+
+  document.getElementById('progreso-txt').textContent = `${respondidas} / ${total} respondidas`;
+  document.getElementById('barra-fill').style.width = total ? `${(respondidas/total)*100}%` : '0%';
+  document.getElementById('puntaje-txt').textContent = `${ptsObtenidos} / ${ptsMax} pts`;
+
+  if (respondidas === total && total > 0) {
+    mostrarResultadoFinal(ptsObtenidos, ptsMax);
+  }
+}
+
+function mostrarResultadoFinal(pts, max) {
+  const pct = max > 0 ? (pts/max)*100 : 0;
+  let nota, comentario;
+  if (pct >= 95) { nota = '10'; comentario = '🌟 ¡Sobresaliente! Dominio excepcional de los contenidos.'; }
+  else if (pct >= 85) { nota = '9'; comentario = '⭐ ¡Muy bien! Excelente manejo de los temas.'; }
+  else if (pct >= 80) { nota = '8'; comentario = '💪 ¡Bien! Buen nivel de comprensión.'; }
+  else if (pct >= 75) { nota = '7'; comentario = '📚 Bien. Recomendamos repasar los temas con errores.'; }
+  else if (pct >= 70) { nota = '6'; comentario = '📖 Aprobado. Hay conceptos para reforzar.'; }
+  else if (pct >= 65) { nota = '5'; comentario = '📖 Aprobado mínimo. Repasá los temas señalados.'; }
+  else if (pct >= 60) { nota = '4'; comentario = '⚠️ Aprobado por el mínimo. Revisá todos los módulos.'; }
+  else { nota = 'R'; comentario = '❌ Por debajo del 60%. ¡No te rindas! Repasá y volvé a intentarlo.'; }
+
+  document.getElementById('nota-final').textContent = nota;
+  document.getElementById('comentario-final').textContent = comentario;
+  document.getElementById('detalle-final').textContent = `Puntaje obtenido: ${pts} / ${max} puntos (${Math.round(pct)}%)`;
+  document.getElementById('resultado-final').classList.add('visible');
+  document.getElementById('resultado-final').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+// ════════════════════════════════════════════════════════════
+//  RESETEAR
+// ════════════════════════════════════════════════════════════
+function resetear(id) {
+  delete estado[id];
+  delete selecciones[id];
+  const p = BANCO.find(x => x.id === id);
+  const card = document.getElementById('card-' + id);
+  const cuerpo = card.querySelector('#cuerpo-' + id);
+  if (p.tipo === 'opcion')    cuerpo.innerHTML = renderOpciones(p);
+  if (p.tipo === 'vof')       cuerpo.innerHTML = renderVoF(p);
+  if (p.tipo === 'relacionar')cuerpo.innerHTML = renderRelacionar(p);
+  if (p.tipo === 'abierta')   cuerpo.innerHTML = renderAbierta(p);
+  document.getElementById('fb-' + id).className = 'feedback';
+  document.getElementById('btn-' + id).disabled = false;
+  actualizarProgreso();
+}
+
+function reiniciarTodo() {
+  estado = {};
+  selecciones = {};
+  renderPreguntas();
+  actualizarProgreso();
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════
+renderPreguntas();
+actualizarProgreso();
+</script>
+</body>
+</html>
